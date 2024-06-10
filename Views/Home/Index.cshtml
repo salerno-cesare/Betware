@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var Name = UserManager.Users.Where(x => x.Email.Equals(UserManager.GetUserName(User))).Select(x => x.FirstName.First().ToString().ToUpper() + x.FirstName.Substring(1)).FirstOrDefault();
+}
+@{
+    var Posizione = ViewBag.Position;
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <img alt="Bootstrap Image Preview" src="../../../images/User_Avatar.png" class="rounded-circle" />
+        </div>
+        <div class="col-md-10">
+            <div class="jumbotron">
+                <h2>Ciao<span class="nameHome"> <strong> @Name</strong></span></h2>
+                @if (Posizione != -1)
+                {
+                    <p>
+                        La tua <mark>posizione</mark> in classifica è: <code>@Posizione</code>
+                    </p>
+                    <p>
+                        @*<a data-toggle="collapse" href="#collapseC" class="btn btn-primary btn-large" href="#">Learn more</a>*@
+                        <a class="btn btn-primary btn-large" asp-area="" asp-controller="Home" asp-action="Classifica">Classifica</a>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        A breve la competizione prenderà il via! <br />
+                        Completa la tua <a asp-controller="Home" asp-action="MyBet">Bet</a>
+
+                    </p>
+
+                }
+
+                <div class="collapse" id="collapseC">
+                    <div class="card card-body">
+                        A breve disponibile questa funzionalità!
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        @*<img class="card-img-top" alt="Regolamento" src="../../../images/pdf-icon.png">*@
+
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h2>
+                                        Regolamento
+                                    </h2>
+                                </div>
+                                @*<div class="col-md-3">
+                                <span class="fa-stack fa-lg" style="line-height:4em">
+                                <i class="fa fa-file-pdf-o"></i>
+                                </span>
+                                </div>*@
+                            </div>
+
+                            <p class="card-text">
+                                Scarica il regolamento della competizione.
+                            </p>
+                            <p>
+                                @*<a data-toggle="collapse" href="#collapseExample" class="btn btn-primary" href="#">Download</a>*@
+                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Download">Download</a>
+                            </p>
+                            @*<div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                            A breve disponibile!
+                            </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        @*<img class="card-img-top" alt="Regolamento" src="../../../images/pdf-icon.png">*@
+
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>
+                                        Calendario Euro 2020
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <p class="card-text">
+                                Scarica il calendario ufficiale
+                            </p>
+                            <p>
+                                @*<a data-toggle="collapse" href="#collapseExample" class="btn btn-primary" href="#">Download</a>*@
+                                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="DownloadCalendario">Download</a>
+                            </p>
+                            @*<div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                            A breve disponibile!
+                            </div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

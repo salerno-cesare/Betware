@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "Classifica";
+}
+<h2>@ViewData["Title"]</h2>
+
+@using Betware.Models.MyBetViewModel
+@model StandigsViewModel
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped" id="table_id">
+                <thead>
+                    <tr>
+                        <th>Posizione</th>
+                        <th>Utente</th>
+                        <th>Punti</th>
+                        <th>Risultati Esatti</th>
+                        <th>Pronostico 1X2</th>
+                        <th>FT_Q</th>
+                        <th>FT_S</th>
+                        <th>FT_F</th>
+                        <th>FT_W</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var sl in Model.StandingList.ToList())
+                    {
+                        <tr>
+                            <td width="15%">
+                                @if (sl.Position != -1)
+                                {
+                                    @sl.Position;
+                                }
+                            </td>
+                            <td width="200px" style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                <a asp-area="" asp-controller="Home" asp-action="MyBet" asp-route-email="@sl.User.Email"> @sl.User.LastName.First().ToString().ToUpper()@sl.User.LastName.Substring(1) @sl.User.FirstName.First().ToString().ToUpper()@sl.User.FirstName.Substring(1)</a>
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.Punti != -1)
+                                {
+                                    @sl.Punti;
+                                }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.RisultatiEsati != -1)
+                                {
+                                    @sl.RisultatiEsati;
+                                }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.UnoxDue != -1)
+                                {
+                                    @sl.UnoxDue;
+                                }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.FT_Q != -1)
+                                {
+                                    @sl.FT_Q
+                                }
+                                else { @Html.DisplayName("-") }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.FT_S != -1)
+                                {
+                                    @sl.FT_S
+                                }
+                                else
+                                { @Html.DisplayName("-") }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.FT_F != -1)
+                                {
+                                    @sl.FT_F
+                                }
+                                else
+                                { @Html.DisplayName("-") }
+                            </td>
+                            <td width="300px" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                                @if (sl.FT_W != -1)
+                                {
+                                    @sl.FT_W
+                                }
+                                else
+                                { @Html.DisplayName("-") }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="box">
+                <div class="box-body">
+                    <table id="example3" class="table table-bordered table-striped">
+                        <thead>
+                            <tr >
+                                <th>Pronostico</th>
+                                <th>Punti</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>Risultato Esatto</td>
+                                <td>3</td>
+                            </tr>
+                            <tr >
+                                <td>Pronostico 1X2</td>
+                                <td>1</td>
+                            </tr>
+                            <tr >
+                                <td>FT_Q (Fase Team Quarti)</td>
+                                <td>2</td>
+                            </tr>
+                            <tr >
+                                <td>FT_S (Fase Team Semifinaliste)</td>
+                                <td>4</td>
+                            </tr>
+                            <tr >
+                                <td>FT_F (Fase Team Finaliste)</td>
+                                <td>6</td>
+                            </tr>
+                            <tr >
+                                <td>FT_W (Fase Team Vincitrice Mondiale) </td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="col-md-2">
+            <form>
+                <fieldset>
+                    <legend>Info:</legend>
+                    Risultati Essatti: <strong>3 Pt</strong><br>
+                    Pronostico 1x2: <strong>1 Pt</strong><br>
+                    FT_Q: <strong>2 Pt</strong><br>
+                    FT_S: <strong>4 Pt</strong><br>
+                    FT_F: <strong>6 Pt</strong><br>
+                    FT_W: <strong>10 Pt</strong><br>
+                </fieldset>
+            </form>
+        </div>*@
+</div>
+</div>
+
+@section scripts {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
+    @*<link rel="stylesheet" src="~/lib/datatables/jquery.dataTables.min.css">
+        <script src="~/lib/datatables/jquery.dataTables.min.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $('#table_id').dataTable({
+                "aaSorting": [],
+                "pageLength": 25
+
+            });
+        });
+    </script>
+}

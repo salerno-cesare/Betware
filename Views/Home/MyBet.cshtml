@@ -1,0 +1,444 @@
+﻿@*@{
+                        ViewData["Title"] = "About";
+                    }
+    <h2>@ViewData["Title"].</h2>
+    <h3>@ViewData["Message"]</h3>
+
+    <p>Use this area to provide additional information.</p>*@
+@using Betware.Models.MyBetViewModel;
+@using ECMS.Helpers
+@model MyUserBetViewModel
+
+@{
+    bool canRead = ViewBag.canread;
+    //DateTime EndFase1 = new DateTime(2018, 6, 14, 17, 0, 0);
+    //DateTime EndFase2 = new DateTime(2018, 6, 19, 20, 0, 0);
+    //DateTime EndFase3 = new DateTime(2018, 6, 25, 16, 0, 0);
+
+    bool isNotExF1 = Constants.EndFase1 > DateTime.Now;
+    bool isNotExF2 = Constants.EndFase2 > DateTime.Now;
+    bool isNotExF3 = Constants.EndFase3 > DateTime.Now;
+
+}
+@{
+    if (canRead)
+    {
+        string betOf = ViewBag.UserCanRead;
+        ViewData["Title"] = "Bet of " + betOf;
+    }
+    else
+    {
+        ViewData["Title"] = "MyBet";
+    }
+}
+
+@*<h2>@ViewData["Title"]</h2>*@
+@*<h3>@ViewData["Message"]</h3>*@
+
+@section HeaderButton {
+@if (!canRead)
+{
+    <div class="breadcrumb " style="position:fixed; width:100%; z-index:1000">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (Constants.EndFase3 > DateTime.Now) {
+                    <button type="button" class="btn btn-primary"  name="commit" data-toggle="modal" data-target="#saveMyBet"><span class="fa fa-save"></span>&emsp;Completa o Salva</button>
+                    @*<input class="btn btn-info" name="commit" type="submit" data-toggle="modal" data-target="#saveMyBet" value="Completa o Salva">*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+}
+@if (ViewBag.saveBet)
+{
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-warning" role="alert" style="margin-top:60px">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Dati salvati correttamente!</h4>
+            Ricordati di completare la tua Bet entro e non oltre le seguenti date <br />
+            <ul>
+                <li><strong>Fase 1</strong> e <strong>Fase Team</strong> 11-06-2021 ore 21:00</li>
+                <li><strong>Fase 2</strong> 16-06-2021 ore 15:00</li>
+                <li><strong>Fase 3</strong> 20-06-2021 ore 18:00</li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success alert-dismissible" style="margin-top:60px">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i>Bet completata!</h4>
+            Hai salvato e completato correttamente la tua bet.
+        </div>
+    }
+}
+else
+{
+    @if (!ViewData.ModelState.IsValid)
+    {
+    <div class="alert alert-danger alert-dismissible" style="margin-top:60px">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-ban"></i> Attenzione!</h4>
+        Operazione non valida.
+    </div>
+        }
+    }
+
+
+
+<div  class="container"  @( !canRead ? Html.Raw("style = 'margin-top:40px'") : Html.Raw("") )>
+    <div class="box-header with-border">
+        <h2 class="box-title">@ViewData["Title"]</h2>
+    </div>
+
+    <form asp-action="MyBet" id="MyBet">
+        <div class="col-md-7">
+            @{
+                var betsUser = Model.BetUser.ToList();
+                var cntBet = 0;
+                bool sessionReadAfterDate = false;
+            }
+            @foreach (var gbet in Model.BetUser.GroupBy(b => new { GRound = b.Match.RoundNumber }))
+            {
+                <button type="button" class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#@gbet.Key.GRound">Fase @gbet.Key.GRound</button>
+                
+                @if (!canRead||((!isNotExF1 && gbet.FirstOrDefault().Match.RoundNumber == 1)||
+                    (!isNotExF2 && gbet.FirstOrDefault().Match.RoundNumber == 2)||
+                    (!isNotExF3 && gbet.FirstOrDefault().Match.RoundNumber == 3)))
+                    {
+                        <div id="@gbet.Key.GRound" class="collapse in">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Data</th>
+                                            <th scope="col">Match</th>
+                                            <th scope="col">Bet Score</th>
+                                            <th scope="col">Esito Match</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var bet in gbet)
+                                        {
+                                            @*<input type="hidden" name="BetUser[@cntBet].Match.HomeT" value="@bet.Match.HomeT" />
+                        <input type="hidden" name="BetUser[@cntBet].Match.AwayT" value="@bet.Match.AwayT" />*@
+                                            @*<input type="hidden" name="BetUser[@cntBet].Match.Id" value="@bet.Match.Id" />*@
+                                            @*<input type="hidden" name="BetUser[@cntBet].Match.RoundNumber" value="@bet.Match.RoundNumber" />*@
+                                            <input type="hidden" name="BetUser[@cntBet].Id" value="@bet.Id" />
+                                            @*<input type="hidden" name="BetUser[@cntBet].EsitoBet" value="@bet.EsitoBet" />
+                        <input type="hidden" name="BetUser[@cntBet].Match.Date" value="@bet.Match.Date" />*@
+
+                                            <tr>
+                                                <th scope="row">@Html.DisplayFor(x => bet.Match.Date) </th>
+                                                @*<th scope="row"><img src="~/images/flags/cr.png"/> @Html.DisplayFor(x => bet.Match.HomeT) - @Html.DisplayFor(x => bet.Match.AwayT)</th>*@
+                                                <th scope="row"><img src="@String.Format("/images/flags/{0}.png",bet.Match.HomeT)" /> @Html.DisplayFor(x => bet.Match.HomeT) - @Html.DisplayFor(x => bet.Match.AwayT) <img src="@String.Format("/images/flags/{0}.png",bet.Match.AwayT)" /></th>
+                                                <td class="center-block">
+                                                    <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUser[{0}].BetIs", cntBet))">
+                                                        @{bool canReadForTimeExpiredF = false;
+                                                            if (!isNotExF1 && gbet.Key.GRound == 1) { canReadForTimeExpiredF = true; }
+                                                            if (!isNotExF2 && gbet.Key.GRound == 2) { canReadForTimeExpiredF = true; }
+                                                            if (!isNotExF3 && gbet.Key.GRound == 3) { canReadForTimeExpiredF = true; }
+                                                        }
+
+
+                                                        @if (canRead || canReadForTimeExpiredF)
+                                                        {
+
+                                                            <select chosen allow-single-deselect="true"
+                                                                    disable-search="true"
+                                                                    asp-for="BetUser[cntBet].BetIs"
+                                                                    ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", cntBet, Html.ValueFor(m => bet.BetIs)) : null);"
+                                                                    asp-items="Constants.BetResults"
+                                                                    ng-model="answer_@cntBet"
+                                                                    class="form-control"
+                                                                    validate disabled>
+                                                                <option value=""></option>
+                                                            </select>
+                                                        }
+                                                        else
+                                                        {
+                                                            <select chosen allow-single-deselect="true"
+                                                                    disable-search="true"
+                                                                    asp-for="BetUser[cntBet].BetIs"
+                                                                    ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", cntBet, Html.ValueFor(m => bet.BetIs)) : null);"
+                                                                    asp-items="Constants.BetResults"
+                                                                    ng-model="answer_@cntBet"
+                                                                    class="form-control"
+                                                                    validate>
+                                                                <option value=""></option>
+                                                            </select>
+                                                        }
+
+                                                    </div>
+                                                </td>
+                                                <th scope="row" align="center">
+                                                    @if (bet.EsitoBet == 1)
+                                                    {
+
+                                                        <span class="fa-stack fa-lg">
+                                                            @*<i class="fa fa-circle icon-background1" style="color:yellow"></i>*@
+                                                            <i class="fa fa-arrow-circle-right icon-background1" style="color: #FFE118"></i>
+                                                        </span>
+                                                        @Html.DisplayFor(x => bet.Match.Result)
+                                                    }
+                                                    @if (bet.EsitoBet == 2)
+                                                    {
+                                                        <span class="fa-stack fa-lg">
+                                                            @*<i class="fa fa-angellist icon-background1" style="color:greenyellow"></i>*@
+                                                            <i class="fa fa-arrow-circle-up" style="color:#00A000"></i>
+                                                        </span>
+                                                        @Html.DisplayFor(x => bet.Match.Result)
+                                                    }
+                                                    @if (bet.EsitoBet == 0)
+                                                    {
+
+                                                        <span class="fa-stack fa-lg">
+                                                            @*<i class="fa fa-angellist icon-background1" style="color:red"></i>*@
+                                                            <i class="fa fa-arrow-circle-down" style="color:red"></i>
+                                                        </span>
+                                                        @Html.DisplayFor(x => bet.Match.Result)
+                                                    }
+                                                    @if (bet.EsitoBet == -1)
+                                                    {
+                                                        <span class="fa-stack fa-lg">
+                                                            <i class="fa fa-question-circle"></i>
+                                                        </span>
+                                                    }
+                                                </th>
+                                            </tr>
+
+                                                                cntBet++;
+                                                            }
+                                    </tbody>
+                                </table>
+                            </div>
+                    }
+                else
+                    {
+                        <div class="message-container">
+                            <span class="fa fa-eye-slash"></span>
+                            <span class="message">&nbsp;Puoi visualizzare i risultati del tuo avversario subito dopo la scadenza delle Fase @gbet.FirstOrDefault().Match.RoundNumber</span>
+                        </div>
+                        @*@Html.Raw("I dati del tuo avversario possono essere visializzati alla scadenza della fase di riferimento")*@
+                        if (gbet.FirstOrDefault().Match.RoundNumber == 1)
+                        {
+                            sessionReadAfterDate = true;
+                        }
+                    }
+            }
+        </div>
+
+        <div class="col-md-5">
+            @{
+                var eightTeam = 0;
+            }
+
+            <div class="row trc">
+                <button type="button" id="accordion" class="accordion" data-toggle="collapse" data-target="#SessionFase">Fase Team</button>
+
+                @if (sessionReadAfterDate)
+                {
+                    <div class="message-container">
+                        <span class="fa fa-eye-slash"></span>
+                        <span class="message">&nbsp;Puoi visualizzare i risultati del tuo avversario subito dopo la scadenza delle Fase Team</span>
+                    </div>
+                }
+                else
+                {
+                    <div id="SessionFase" class="collapse in">
+                        @foreach (var bS in Model.BetUserSession.GroupBy(s => new { s.Session }))
+                        {
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        @if (bS.Key.Session.Equals(Constants.QUARTI))
+                                        {
+                                            <th scope="col">@Constants.Quarti_Descrizione</th>}
+                                        @if (bS.Key.Session.Equals(Constants.SEMIFINALISTE))
+                                        {
+                                            <th scope="col">@Constants.Semifinali_Descrizione</th>}
+                                        @if (bS.Key.Session.Equals(Constants.FINALE))
+                                        {
+                                            <th scope="col">@Constants.Finale_Descrizione</th>}
+                                        @if (bS.Key.Session.Equals(Constants.WIN))
+                                        {
+                                            <th scope="col">@Constants.Win_Descrizione</th>}
+
+                                        @*
+                                            <th scope="col">Esito</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (@bS.Key.Session == Constants.QUARTI)
+                                    {
+                                        @foreach (var bSTeam in bS)
+                                        {
+                                            <tr class="col-sm-6">
+                                                <input type="hidden" name="BetUserSession[@eightTeam].Session" value="@bSTeam.Session" />
+                                                <input type="hidden" name="BetUserSession[@eightTeam].Id" value="@bSTeam.Id" />
+
+                                                <td>
+                                                    <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUserSession[{0}].Team", eightTeam))">
+                                                        <div class="row">
+
+                                                            @if (canRead || !isNotExF1)
+                                                            {
+                                                                <div class="col-md-10">
+                                                                    <select chosen allow-single-deselect="true"
+                                                                            disable-search="true"
+                                                                            asp-for="BetUserSession[eightTeam].Team"
+                                                                            ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", eightTeam, Html.ValueFor(m => bSTeam.Team)) : null);"
+                                                                            asp-items="Constants.BetTeams"
+                                                                            class="form-control @bSTeam.Session"
+                                                                            ng-model="session_@eightTeam"
+                                                                            validate disabled>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1" style="padding-left:0px">
+                                                                    <span class="fa-stack fa-lg">
+                                                                        @if (bSTeam.EsitoFS == 1)
+                                                                        {
+                                                                            <i class="fa fa-arrow-circle-up" style="color:#00A000"></i>
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col-md-10">
+                                                                    <select chosen allow-single-deselect="true"
+                                                                            disable-search="true"
+                                                                            asp-for="BetUserSession[eightTeam].Team"
+                                                                            ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", eightTeam, Html.ValueFor(m => bSTeam.Team)) : null);"
+                                                                            asp-items="Constants.BetTeams"
+                                                                            class="form-control @bSTeam.Session"
+                                                                            ng-model="session_@eightTeam"
+                                                                            validate>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1" style="padding-left:0px">
+                                                                    <span class="fa-stack fa-lg">
+                                                                        @if (bSTeam.EsitoFS == 1)
+                                                                        {
+                                                                            <i class="fa fa-arrow-circle-up" style="color:#00A000"></i>
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            }
+
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            eightTeam++;
+                                        }
+                                    }
+                                    else
+                                    {
+
+                                        @foreach (var bSTeam in bS)
+                                        {
+                                            <tr class="col-sm-6">
+                                                <input type="hidden" name="BetUserSession[@eightTeam].Session" value="@bSTeam.Session" />
+                                                <input type="hidden" name="BetUserSession[@eightTeam].Id" value="@bSTeam.Id" />
+                                                <td>
+                                                    <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUserSession[{0}].Team", eightTeam))">
+                                                        <div class="row">
+
+                                                            @if (canRead || !isNotExF1)
+                                                            {
+                                                                <div class="col-md-10">
+                                                                    <select chosen allow-single-deselect="true"
+                                                                            disable-search="true"
+                                                                            asp-for="BetUserSession[eightTeam].Team"
+                                                                            ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", eightTeam, Html.ValueFor(m=>bSTeam.Team)) : null);"
+                                                                            asp-items="Constants.BetTeams"
+                                                                            class="form-control @bSTeam.Session"
+                                                                            ng-model="session_@eightTeam"
+                                                                            validate disabled>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1" style="padding-left:0px">
+                                                                    <span class="fa-stack fa-lg">
+                                                                        @if (bSTeam.EsitoFS == 1)
+                                                                        {
+                                                                            <i class="fa fa-arrow-circle-up" style="color:#00A000"></i>
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="col-md-10 ">
+                                                                    <select chosen allow-single-deselect="true"
+                                                                            disable-search="true"
+                                                                            asp-for="BetUserSession[eightTeam].Team"
+                                                                            ng-init="@((Model != null) ? string.Format("BetIs_{0}='{1}' ", eightTeam, Html.ValueFor(m=>bSTeam.Team)) : null);"
+                                                                            asp-items="Constants.BetTeams"
+                                                                            class="form-control @bSTeam.Session"
+                                                                            ng-model="session_@eightTeam"
+                                                                            validate>
+                                                                        <option value=""></option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-1" style="padding-left:0px">
+                                                                    <span class="fa-stack fa-lg">
+                                                                        @if (bSTeam.EsitoFS == 1)
+                                                                        {
+                                                                            <i class="fa fa-arrow-circle-up" style="color:#00A000"></i>
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            eightTeam++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                    </div>
+                }
+            </div>
+            @*
+                        </div>
+                </div>*@
+        </div>
+            <div class="modal fade" id="saveMyBet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-disabled="disabled"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Completa o Salva</h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <span class="fa big fa-pencil"></span>
+                            <h4>Vuoi salvare i dati?</h4>
+                            <h5>(<strong>Ricorda:</strong> i dati potranno essere modificati entro le scadenze prefissate</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-modal btn-lg" ng-disabled="disabled">Yes</button>
+                            <button type="button" class="btn btn-modal btn-lg" ng-disabled="disabled" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+@section scripts {
+    <script type="text/javascript" src="~/js/Custom.js"></script>
+    <script type="text/javascript" src="~/js/Accordion.js"></script>
+}

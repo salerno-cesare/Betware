@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Betware.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using ECMS.Helpers
+
+@{
+    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now;
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            @{
+                var name = UserManager.Users.Where(x => x.Email.Equals(UserManager.GetUserName(User))).Select(x => x.FirstName.First().ToString().ToUpper() + x.FirstName.Substring(1)).FirstOrDefault();
+                var surname = UserManager.Users.Where(x => x.Email.Equals(UserManager.GetUserName(User))).Select(x => x.LastName.First().ToString().ToUpper() + x.LastName.Substring(1)).FirstOrDefault();
+
+            }
+            @if (User.Identity.Name.Equals("luca.adimari@nttdata.com"))
+            {
+                <li>
+                    <a asp-area="" asp-controller="Home" asp-action="CalcolaClassifica">Calcola</a>
+                </li>
+            }
+            <li>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage"><i class="fa fa-user"></i> @name @surname</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link"><i class="fa fa-sign-out"></i> Log off</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @if (RegistrazioneAbilitata)
+        {
+            <li><a asp-area="" asp-controller="Account" asp-action="Register"><i class="fa fa-user-plus"></i> Register</a></li>
+        }
+        <li><a asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-sign-in"></i> Log in</a></li>
+    </ul>
+}

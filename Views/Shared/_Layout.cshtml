@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Betware</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/Personal.css" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <!-- DataTables -->
+        <link rel="stylesheet" href="~/lib/datatables/dataTables.bootstrap4.min.css">
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="~/css/Personal.css" />
+        <!-- DataTables -->
+        <link rel="stylesheet" href="~/lib/datatables/dataTables.bootstrap4.min.css">
+    </environment>
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Betware</a>*@
+                <a class="navbar-brand">Betware</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="MyBet"><i class="fa fa-edit"></i> MyBet</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Classifica"><i class="fa fa-table"></i> Classifica</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <section class="content-header">
+        @*<h1>
+        @ViewBag.Title
+
+        <small>@ViewBag.Subtitle</small>
+        <span class="badge withMargin @Html.ContractStatusBadgeClassFor((string)ViewBag.Status)">@ViewBag.Status</span>
+        </h1>*@
+        @RenderSection("HeaderButton", required: false)
+    </section>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer>
+        <p></p>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
