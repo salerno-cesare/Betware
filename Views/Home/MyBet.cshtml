@@ -139,7 +139,7 @@ else
                                                 <td class="center-block">
                                                     <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUser[{0}].BetIs", cntBet))">
                                                         @{bool canReadForTimeExpiredF = false;
-                                                            if (!isNotExF1 && gbet.Key.GRound == 1) { canReadForTimeExpiredF = true; }
+                                                            if (!isNotExF1 && gbet.Key.GRound == 1 && bet.Match.Date < DateTime.Now) { canReadForTimeExpiredF = true; }
                                                             if (!isNotExF2 && gbet.Key.GRound == 2) { canReadForTimeExpiredF = true; }
                                                             if (!isNotExF3 && gbet.Key.GRound == 3) { canReadForTimeExpiredF = true; }
                                                         }
@@ -286,7 +286,7 @@ else
                                                     <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUserSession[{0}].Team", eightTeam))">
                                                         <div class="row">
 
-                                                            @if (canRead || !isNotExF1)
+                                                            @if (canRead || !isNotExF2)
                                                             {
                                                                 <div class="col-md-10">
                                                                     <select chosen allow-single-deselect="true"
@@ -353,7 +353,7 @@ else
                                                     <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUserSession[{0}].Team", eightTeam))">
                                                         <div class="row">
 
-                                                            @if (canRead || !isNotExF1)
+                                                            @if (canRead || !isNotExF2)
                                                             {
                                                                 <div class="col-md-10">
                                                                     <select chosen allow-single-deselect="true"

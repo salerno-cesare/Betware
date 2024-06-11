@@ -99,38 +99,32 @@ namespace ECMS.Helpers
 
         public static readonly IEnumerable<SelectListItem> BetTeams = new List<SelectListItem>
         {
-            new SelectListItem{Value ="Argentina", Text="Argentina"},
-        new SelectListItem{Value ="Australia", Text="Australia"},
-        new SelectListItem{Value ="Belgium", Text="Belgium"},
-        new SelectListItem{Value ="Brazil", Text="Brazil"},
-        new SelectListItem{Value ="Cameroon", Text="Cameroon"},
-        new SelectListItem{Value ="Canada", Text="Canada"},
-        new SelectListItem{Value ="Costa Rica", Text="Costa Rica"},
-        new SelectListItem{Value ="Croatia", Text="Croatia"},
-        new SelectListItem{Value ="Denmark", Text="Denmark"},
-        new SelectListItem{Value ="Ecuador", Text="Ecuador"},
-        new SelectListItem{Value ="England", Text="England"},
-        new SelectListItem{Value ="France", Text="France"},
-        new SelectListItem{Value ="Germany", Text="Germany"},
-        new SelectListItem{Value ="Ghana", Text="Ghana"},
-        new SelectListItem{Value ="Iran", Text="Iran"},
-        new SelectListItem{Value ="Japan", Text="Japan"},
-        new SelectListItem{Value ="Mexico", Text="Mexico"},
-        new SelectListItem{Value ="Morocco", Text="Morocco"},
-        new SelectListItem{Value ="Netherlands", Text="Netherlands"},
-        new SelectListItem{Value ="Poland", Text="Poland"},
-        new SelectListItem{Value ="Portugal", Text="Portugal"},
-        new SelectListItem{Value ="Qatar", Text="Qatar"},
-        new SelectListItem{Value ="Saudi Arabia", Text="Saudi Arabia"},
-        new SelectListItem{Value ="Senegal", Text="Senegal"},
-        new SelectListItem{Value ="Serbia", Text="Serbia"},
-        new SelectListItem{Value ="South Korea", Text="South Korea"},
-        new SelectListItem{Value ="Spain", Text="Spain"},
-        new SelectListItem{Value ="Switzerland", Text="Switzerland"},
-        new SelectListItem{Value ="Tunisia", Text="Tunisia"},
-        new SelectListItem{Value ="United States", Text="United States"},
-        new SelectListItem{Value ="Uruguay", Text="Uruguay"},
-        new SelectListItem{Value ="Wales", Text="Wales"}
+
+            new SelectListItem{Value ="Germania", Text="Germania"},
+            new SelectListItem{Value ="Scozia", Text="Scozia"},
+            new SelectListItem{Value ="Ungheria", Text="Ungheria"},
+            new SelectListItem{Value ="Svizzera", Text="Svizzera"},
+            new SelectListItem{Value ="Spagna", Text="Spagna"},
+            new SelectListItem{Value ="Croazia", Text="Croazia"},
+            new SelectListItem{Value ="Italia", Text="Italia"},
+            new SelectListItem{Value ="Albania", Text="Albania"},
+            new SelectListItem{Value ="Slovenia", Text="Slovenia"},
+            new SelectListItem{Value ="Danimarca", Text="Danimarca"},
+            new SelectListItem{Value ="Serbia", Text="Serbia"},
+            new SelectListItem{Value ="Inghilterra", Text="Inghilterra"},
+            new SelectListItem{Value ="Polonia", Text="Polonia"},
+            new SelectListItem{Value ="Paesi Bassi", Text="Paesi Bassi"},
+            new SelectListItem{Value ="Austria", Text="Austria"},
+            new SelectListItem{Value ="Francia", Text="Francia"},
+            new SelectListItem{Value ="Belgio", Text="Belgio"},
+            new SelectListItem{Value ="Slovacchia", Text="Slovacchia"},
+            new SelectListItem{Value ="Romania", Text="Romania"},
+            new SelectListItem{Value ="Ucraina", Text="Ucraina"},
+            new SelectListItem{Value ="Turchia", Text="Turchia"},
+            new SelectListItem{Value ="Georgia", Text="Georgia"},
+            new SelectListItem{Value ="Portogallo", Text="Portogallo"},
+            new SelectListItem{Value ="Repubblica Ceca", Text="Repubblica Ceca"},
+
         };
 
         #endregion
@@ -143,7 +137,7 @@ namespace ECMS.Helpers
         public readonly static string FS_Q = "FS_Q";
         public readonly static string FS_S = "FS_S";
         public readonly static string FS_F = "FS_F";
-        public readonly static string FS_W = "FS_W"; 
+        public readonly static string FS_W = "FS_W";
 
 
         public readonly static string Quarti_Descrizione = "Quali squadre disputeranno i Quarti? (FS_Q)";
@@ -151,9 +145,12 @@ namespace ECMS.Helpers
         public readonly static string Finale_Descrizione = "Quali squadre disputeranno la Finale? (FS_F)";
         public readonly static string Win_Descrizione = "Quale squadra vincerà? (FS_W)";
 
-        public readonly static DateTime EndRegistration = new DateTime(2025, 11, 23, 13, 50, 0);
-        public readonly static DateTime EndFase1 = new DateTime(2022, 11, 20, 21, 0, 0);
-        public readonly static DateTime EndFase2 = new DateTime(2022, 11, 25, 11, 0, 0);
-        public readonly static DateTime EndFase3 = new DateTime(2022, 11, 29, 16, 0, 0);
+        public readonly static DateTime EndRegistration = new DateTime(2024, 06, 14, 20, 45, 0);
+
+        public readonly static DateTime EndFase1 = new DateTime(2024, 06, 14, 21, 00, 0);
+
+        public readonly static DateTime EndFase2 = new DateTime(2024, 06, 19, 15, 0, 0);
+
+        public readonly static DateTime EndFase3 = new DateTime(2024, 06, 23, 21, 0, 0);
     }
 }
