@@ -145,9 +145,9 @@ namespace ECMS.Helpers
         public readonly static string Finale_Descrizione = "Quali squadre disputeranno la Finale? (FS_F)";
         public readonly static string Win_Descrizione = "Quale squadra vincerà? (FS_W)";
 
-        public readonly static DateTime EndRegistration = new DateTime(2024, 06, 14, 20, 45, 0);
+        public readonly static DateTime EndRegistration = new DateTime(2023, 06, 19, 20, 45, 0);
 
-        public readonly static DateTime EndFase1 = new DateTime(2024, 06, 14, 21, 00, 0);
+        public readonly static DateTime EndFase1 = new DateTime(2023, 06, 14, 21, 00, 0);
 
         public readonly static DateTime EndFase2 = new DateTime(2024, 06, 19, 15, 0, 0);
 
