@@ -18,6 +18,7 @@
     bool isNotExF1 = Constants.EndFase1 > DateTime.Now;
     bool isNotExF2 = Constants.EndFase2 > DateTime.Now;
     bool isNotExF3 = Constants.EndFase3 > DateTime.Now;
+    DateTime date = DateTime.Now;
 
 }
 @{
@@ -34,7 +35,6 @@
 
 @*<h2>@ViewData["Title"]</h2>*@
 @*<h3>@ViewData["Message"]</h3>*@
-
 @section HeaderButton {
 @if (!canRead)
 {
@@ -121,7 +121,7 @@ else
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                <div>@Html.DisplayFor(x => date) </div>
                                         @foreach (var bet in gbet)
                                         {
                                             @*<input type="hidden" name="BetUser[@cntBet].Match.HomeT" value="@bet.Match.HomeT" />
@@ -134,6 +134,7 @@ else
 
                                             <tr>
                                                 <th scope="row">@Html.DisplayFor(x => bet.Match.Date) </th>
+                                        
                                                 @*<th scope="row"><img src="~/images/flags/cr.png"/> @Html.DisplayFor(x => bet.Match.HomeT) - @Html.DisplayFor(x => bet.Match.AwayT)</th>*@
                                                 <th scope="row"><img src="@String.Format("/images/flags/{0}.png",bet.Match.HomeT)" /> @Html.DisplayFor(x => bet.Match.HomeT) - @Html.DisplayFor(x => bet.Match.AwayT) <img src="@String.Format("/images/flags/{0}.png",bet.Match.AwayT)" /></th>
                                                 <td class="center-block">
