@@ -405,7 +405,7 @@ namespace Betware.Controllers
 
                     }
                 }
-                if (isNotExF1 && !ErrorBet)
+                if (isNotExF2 && !ErrorBet)
                 {
                     //ErrorTeam = false;
                     var LQ = myUserBet.BetUserSession.Where(x => x.Team != null && x.Session.Equals(Constants.QUARTI)).ToList();
