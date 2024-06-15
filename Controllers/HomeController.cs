@@ -577,6 +577,7 @@ namespace Betware.Controllers
                 //ViewData["Message"] = "Your Classifica page.";
                 //var user = User.Identity.Name;
                 var allBet = DbContext.Bets.Include(b => b.Match).Include(u => u.User).Where(x => x.Match.Result != null).GroupBy(x => new { u = x.User.Email });
+                //this.DbContext.Database.SetCommandTimeout(180);
                 _logger.LogInformation($"Count List allBet {allBet.Count()}");
                 List<Team> teamsFT = DbContext.Teams.Where(x => x.FT_Q == true).ToList();
                 foreach (var userForBet in allBet)
@@ -615,7 +616,7 @@ namespace Betware.Controllers
                             if (!betWithPoint)
                                 ufb.EsitoBet = 0;
                         }
-                        DbContext.SaveChanges();
+                       // DbContext.SaveChanges();
                     }
                     int countTeamQ = -1;
                     int countTeamS = -1;
@@ -646,8 +647,9 @@ namespace Betware.Controllers
                     dbClassificaUser.UnoxDue = unoxdue;
                     dbClassificaUser.RisultatiEsati = risultatiIndovinati;
 
-                    DbContext.SaveChanges();
+                    
                 }
+                DbContext.SaveChanges();
                 int posizione = 1;
                 IList<Standings> dbAllClassif = DbContext.Standings.Include(u => u.User)
                     .OrderByDescending(p => p.Punti)
@@ -710,9 +712,27 @@ namespace Betware.Controllers
                 DbContext.SaveChanges();
                 return View("Classifica", new StandigsViewModel { StandingList = dbAllClassif });
             }
+            catch (DbUpdateException ex)
+            {
+                // Logga l'errore dettagliato
+                //Console.WriteLine($"Errore durante il salvataggio: {ex.InnerException?.Message ?? ex.Message}");
+                _logger.LogInformation($"Errore durante il salvataggio: {ex.InnerException?.Message ?? ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    //Console.WriteLine($"Dettagli dell'inner exception: {ex.InnerException.Message}");
+                    _logger.LogInformation($"Dettagli dell'inner exception: {ex.InnerException.Message}");
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        //Console.WriteLine($"Dettagli dell'inner-inner exception: {ex.InnerException.InnerException.Message}");
+                        _logger.LogInformation($"Dettagli dell'inner-inner exception: {ex.InnerException.InnerException.Message}");
+                    }
+                }
+                return View("Error");
+            }
             catch (Exception ex)
             {
-                _logger.LogError($"--> Error in Calcola Classifica: {ex.Message}");
+                // Logga altri errori generici
+                _logger.LogInformation($"Errore generico: {ex.Message}");
                 return View("Error");
             }
         }
