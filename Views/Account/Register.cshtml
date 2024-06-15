@@ -2,7 +2,7 @@
 @using ECMS.Helpers
 @{
     ViewData["Title"] = "Register";
-    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now;
+    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now.AddHours(+2);
 }
 <h2>@ViewData["Title"].</h2>
 @if(RegistrazioneAbilitata) { 

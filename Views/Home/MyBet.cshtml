@@ -15,10 +15,10 @@
     //DateTime EndFase2 = new DateTime(2018, 6, 19, 20, 0, 0);
     //DateTime EndFase3 = new DateTime(2018, 6, 25, 16, 0, 0);
 
-    bool isNotExF1 = Constants.EndFase1 > DateTime.Now;
-    bool isNotExF2 = Constants.EndFase2 > DateTime.Now;
-    bool isNotExF3 = Constants.EndFase3 > DateTime.Now;
-    DateTime date = DateTime.Now;
+    bool isNotExF1 = Constants.EndFase1 > DateTime.Now.AddHours(+2);
+    bool isNotExF2 = Constants.EndFase2 > DateTime.Now.AddHours(+2);
+    bool isNotExF3 = Constants.EndFase3 > DateTime.Now.AddHours(+2);
+    DateTime date = DateTime.Now.AddHours(+2);
 
 }
 @{
@@ -42,7 +42,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    @if (Constants.EndFase3 > DateTime.Now) {
+                        @if (Constants.EndFase3 > DateTime.Now.AddHours(+2))
+                        {
                     <button type="button" class="btn btn-primary"  name="commit" data-toggle="modal" data-target="#saveMyBet"><span class="fa fa-save"></span>&emsp;Completa o Salva</button>
                     @*<input class="btn btn-info" name="commit" type="submit" data-toggle="modal" data-target="#saveMyBet" value="Completa o Salva">*@
                     }
@@ -140,7 +141,7 @@ else
                                                 <td class="center-block">
                                                     <div class="form-group @Html.ErrorCssClassFor(string.Format("BetUser[{0}].BetIs", cntBet))">
                                                         @{bool canReadForTimeExpiredF = false;
-                                                            if (!isNotExF1 && gbet.Key.GRound == 1 && bet.Match.Date < DateTime.Now) { canReadForTimeExpiredF = true; }
+                                                    if (!isNotExF1 && gbet.Key.GRound == 1 && bet.Match.Date < DateTime.Now.AddHours(+2)) { canReadForTimeExpiredF = true; }
                                                             if (!isNotExF2 && gbet.Key.GRound == 2) { canReadForTimeExpiredF = true; }
                                                             if (!isNotExF3 && gbet.Key.GRound == 3) { canReadForTimeExpiredF = true; }
                                                         }

@@ -119,7 +119,7 @@ namespace Betware.Controllers
                 _logger.LogInformation($"MyBet Post: {user}");
                 //IList<FinalSession> dbBetSessionUser = DbContext.FinalSessions.Where(x => x.User.Email.Equals(user)).ToList();
                 //var sessionTeam = myUserBet.BetUserSession.ToList();
-                if (Constants.EndFase3 > DateTime.Now)
+                if (Constants.EndFase3 > DateTime.Now.AddHours(+2))
                 {
                     IList<Bet> betUser = new List<Bet>();
                     IList<FinalSession> newMyBetSesison = new List<FinalSession>();
@@ -192,7 +192,7 @@ namespace Betware.Controllers
                         EsitoBet = -1,
                         Match = a,
                         User = appUser,
-                        Timestamp = DateTime.Now
+                        Timestamp = DateTime.Now.AddHours(+2)
 
                     };
                     DbContext.Bets.Add(b);
@@ -235,7 +235,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
 
             });
             newMyBetSesison.Add(new FinalSession()
@@ -244,7 +244,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -252,7 +252,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -260,7 +260,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -268,7 +268,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -276,7 +276,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -284,7 +284,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -292,7 +292,7 @@ namespace Betware.Controllers
                 Session = Constants.QUARTI,
                 Ordinamento = 1,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             //Quarti
             newMyBetSesison.Add(new FinalSession()
@@ -301,7 +301,7 @@ namespace Betware.Controllers
                 Session = Constants.SEMIFINALISTE,
                 Ordinamento = 2,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -309,7 +309,7 @@ namespace Betware.Controllers
                 Session = Constants.SEMIFINALISTE,
                 Ordinamento = 2,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -317,7 +317,7 @@ namespace Betware.Controllers
                 Session = Constants.SEMIFINALISTE,
                 Ordinamento = 2,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -325,7 +325,7 @@ namespace Betware.Controllers
                 Session = Constants.SEMIFINALISTE,
                 Ordinamento = 2,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             //Semifinaliste
             newMyBetSesison.Add(new FinalSession()
@@ -334,7 +334,7 @@ namespace Betware.Controllers
                 Session = Constants.FINALE,
                 Ordinamento = 3,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             newMyBetSesison.Add(new FinalSession()
             {
@@ -342,7 +342,7 @@ namespace Betware.Controllers
                 Session = Constants.FINALE,
                 Ordinamento = 3,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
             //Win
             newMyBetSesison.Add(new FinalSession()
@@ -351,7 +351,7 @@ namespace Betware.Controllers
                 Session = Constants.WIN,
                 Ordinamento = 4,
                 EsitoFS = -1,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.Now.AddHours(+2)
             });
 
             return newMyBetSesison;
@@ -360,9 +360,9 @@ namespace Betware.Controllers
         {
             try
             {
-                bool isNotExF1 = Constants.EndFase1 > DateTime.Now;
-                bool isNotExF2 = Constants.EndFase2 > DateTime.Now;
-                bool isNotExF3 = Constants.EndFase3 > DateTime.Now;
+                bool isNotExF1 = Constants.EndFase1 > DateTime.Now.AddHours(+2);
+                bool isNotExF2 = Constants.EndFase2 > DateTime.Now.AddHours(+2);
+                bool isNotExF3 = Constants.EndFase3 > DateTime.Now.AddHours(+2);
 
                 var user = User.Identity.Name;
                 _logger.LogInformation($"Start SaveBet for user: {user}");
@@ -386,20 +386,20 @@ namespace Betware.Controllers
                     {
                         Bet dbBetUser = DbContext.Bets.Include(b => b.Match).Where(x => x.User.Email.Equals(user) && x.Id == bUser.Id).FirstOrDefault();
                         int RoundNumber = dbBetUser.Match.RoundNumber;
-                        if (RoundNumber == 1 && dbBetUser.Date>DateTime.Now)
+                        if (RoundNumber == 1 && dbBetUser.Date>DateTime.Now.AddHours(+2))
                         {
                             dbBetUser.BetIs = bUser.BetIs;
-                            dbBetUser.Timestamp = DateTime.Now;
+                            dbBetUser.Timestamp = DateTime.Now.AddHours(+2);
                         }
                         if (RoundNumber == 2 && isNotExF2)
                         {
                             dbBetUser.BetIs = bUser.BetIs;
-                            dbBetUser.Timestamp = DateTime.Now;
+                            dbBetUser.Timestamp = DateTime.Now.AddHours(+2);
                         }
                         if (RoundNumber == 3 && isNotExF3)
                         {
                             dbBetUser.BetIs = bUser.BetIs;
-                            dbBetUser.Timestamp = DateTime.Now;
+                            dbBetUser.Timestamp = DateTime.Now.AddHours(+2);
                         }
                         //}
 
@@ -451,7 +451,7 @@ namespace Betware.Controllers
                             {
                                 fsDb.Team = null;
                             }
-                            fsDb.Timestamp = DateTime.Now;
+                            fsDb.Timestamp = DateTime.Now.AddHours(+2);
                         }
                     }
                 }

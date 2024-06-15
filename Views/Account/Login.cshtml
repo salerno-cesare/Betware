@@ -5,7 +5,9 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @using ECMS.Helpers
 
-@{bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now; }
+@{
+    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now.AddHours(+2);
+}
 
 
 @{

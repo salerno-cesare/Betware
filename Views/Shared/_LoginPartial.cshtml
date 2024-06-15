@@ -6,7 +6,7 @@
 @using ECMS.Helpers
 
 @{
-    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now;
+    bool RegistrazioneAbilitata = Constants.EndRegistration > DateTime.Now.AddHours(+2);
 }
 
 @if (SignInManager.IsSignedIn(User))
