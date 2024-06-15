@@ -125,12 +125,12 @@ else
                                         @foreach (var bet in gbet)
                                         {
                                             @*<input type="hidden" name="BetUser[@cntBet].Match.HomeT" value="@bet.Match.HomeT" />
-                        <input type="hidden" name="BetUser[@cntBet].Match.AwayT" value="@bet.Match.AwayT" />*@
+                                            <input type="hidden" name="BetUser[@cntBet].Match.AwayT" value="@bet.Match.AwayT" />*@
                                             @*<input type="hidden" name="BetUser[@cntBet].Match.Id" value="@bet.Match.Id" />*@
                                             @*<input type="hidden" name="BetUser[@cntBet].Match.RoundNumber" value="@bet.Match.RoundNumber" />*@
                                             <input type="hidden" name="BetUser[@cntBet].Id" value="@bet.Id" />
                                             @*<input type="hidden" name="BetUser[@cntBet].EsitoBet" value="@bet.EsitoBet" />
-                        <input type="hidden" name="BetUser[@cntBet].Match.Date" value="@bet.Match.Date" />*@
+                                            <input type="hidden" name="BetUser[@cntBet].Match.Date" value="@bet.Match.Date" />*@
 
                                             <tr>
                                                 <th scope="row">@Html.DisplayFor(x => bet.Match.Date) </th>
@@ -224,7 +224,7 @@ else
                             <span class="message">&nbsp;Puoi visualizzare i risultati del tuo avversario subito dopo la scadenza delle Fase @gbet.FirstOrDefault().Match.RoundNumber</span>
                         </div>
                         @*@Html.Raw("I dati del tuo avversario possono essere visializzati alla scadenza della fase di riferimento")*@
-                        if (gbet.FirstOrDefault().Match.RoundNumber == 1)
+                        if (gbet.FirstOrDefault().Match.RoundNumber == 2)
                         {
                             sessionReadAfterDate = true;
                         }

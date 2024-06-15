@@ -386,7 +386,7 @@ namespace Betware.Controllers
                     {
                         Bet dbBetUser = DbContext.Bets.Include(b => b.Match).Where(x => x.User.Email.Equals(user) && x.Id == bUser.Id).FirstOrDefault();
                         int RoundNumber = dbBetUser.Match.RoundNumber;
-                        if (RoundNumber == 1 && isNotExF1)
+                        if (RoundNumber == 1 && dbBetUser.Date>DateTime.Now)
                         {
                             dbBetUser.BetIs = bUser.BetIs;
                             dbBetUser.Timestamp = DateTime.Now;
@@ -622,6 +622,7 @@ namespace Betware.Controllers
                     int countTeamF = -1;
                     int countTeamW = -1;
                     Standings dbClassificaUser = DbContext.Standings.Where(x => x.User.Equals(userForBet.FirstOrDefault().User)).FirstOrDefault();
+
                     if (teamsFT.Count != 0)
                     {
                         _logger.LogInformation($"Calcolo la fase team. Count FT List: {teamsFT.Count}");
